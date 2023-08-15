@@ -79,3 +79,4 @@ resetButton.onclick = () => {
     counter = 0;
     seconds.textContent = counter;
 };
+//test
