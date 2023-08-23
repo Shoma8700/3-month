@@ -28,9 +28,12 @@ const scrollOpen = () =>{
     if (bottom >= bodyHight){
         openModal()
         document.removeEventListener("scroll", scrollOpen)
+
     }
+    console.log(bottom, bodyHight)
 
 }
 document.addEventListener("scroll",scrollOpen)
 
 setTimeout(openModal, 10000);
+

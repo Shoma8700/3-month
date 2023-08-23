@@ -40,7 +40,6 @@ const showTabContent = (index = 0) => {
 
 }
 
-
 hideTabContent()
 showTabContent()
 

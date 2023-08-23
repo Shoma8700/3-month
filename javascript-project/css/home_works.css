@@ -49,7 +49,12 @@
     height: 50px;
     background: red;
 }
-
+.richTytle {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    padding-bottom: 10px;
+}
 .inner_move_block {
     margin-top: 50px;
 }
@@ -83,4 +88,29 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+.richMans {
+    background-color: #0e0c0c;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-bottom: 20px;
+
+}
+.card {
+    color: orange;
+    width: 150px;
+    border: 1px solid;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.card img {
+    width: 60px;
+    margin-bottom: 5px;
 }

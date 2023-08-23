@@ -80,3 +80,41 @@ resetButton.onclick = () => {
     seconds.textContent = counter;
 };
 //test
+
+const richMansBlock = document.querySelector(".richMans")
+
+
+const mansBlock =() => {
+    const request = new XMLHttpRequest()
+    request.open("GET", "data.json")
+    request.setRequestHeader("content-type", "application/json")
+    request.send()
+    // console.log(request)
+
+    request.addEventListener("load", () => {
+        const data = JSON.parse(request.response)
+        data.forEach((person) =>{
+            const personCard = document.createElement("div")
+            personCard.classList.add("card")
+            console.log(personCard, data)
+            personCard.innerHTML = `
+            <img src="${person.img}" alt="foto">
+            <h5>Name: ${person.name}</h5>
+            <span>Age: ${person.age}</span>
+            <span>Citizenship: ${person.Citizenship}</span>
+            <span>Condition: ${person.Condition}</span>
+            <span>Source: ${person.Source}</span>
+
+            `
+            richMansBlock.append(personCard)
+        })
+
+    })
+
+
+}
+mansBlock()
+
+
+
+
