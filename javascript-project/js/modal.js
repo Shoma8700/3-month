@@ -37,3 +37,15 @@ document.addEventListener("scroll",scrollOpen)
 
 setTimeout(openModal, 10000);
 
+//POST DATA
+
+const form = document.querySelector("form")
+
+const postData = (form) => {
+    form.addEventListener("submit", (event) => {
+        event.preventDefault()
+
+
+    })
+}
+postData(form)
