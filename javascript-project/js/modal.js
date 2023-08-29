@@ -30,7 +30,6 @@ const scrollOpen = () =>{
         document.removeEventListener("scroll", scrollOpen)
 
     }
-    console.log(bottom, bodyHight)
 
 }
 document.addEventListener("scroll",scrollOpen)

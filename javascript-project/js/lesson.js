@@ -74,7 +74,6 @@ autoSlider()
 const som = document.querySelector("#som")
 const usd = document.querySelector("#usd")
 const eur = document.querySelector("#eur")
-console.log(eur)
 
 
 const convertor = (element, target, target2, elementName) =>{
@@ -100,10 +99,10 @@ const convertor = (element, target, target2, elementName) =>{
                     target2.value = (element.value * respons.eur / respons.usd).toFixed(2)
                     break
             }
-            if(element.value === ""){
-                target.value = ""
-                target2.value = ""
-            }
+            // if(element.value === ""){
+            //     target.value = ""
+            //     target2.value = ""
+            // }
             // if (istru) {
             //     target.value = (element.value / respons.usd).toFixed(2)
             //     target2.value = (element.value / respons.eur).toFixed(2)
@@ -141,4 +140,51 @@ convertor(eur, som, usd, "eur")
 //     })
 // })
 
+//Cad Switcher
 
+const card = document.querySelector(".card")
+const btnPrev = document.querySelector("#btn-prev")
+const btnNext = document.querySelector("#btn-next")
+let count = 1
+
+const countData = () => {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
+        .then((response) => response.json())
+        .then((data) => {
+            card.innerHTML = `
+            <p>${data.title}</p>
+            <p style="color: ${data.completed ? "green" : "red"}">${data.completed}</p>
+            <span>${data.id}</span>
+             `
+        })
+}
+btnNext.onclick = () => {
+    if (count < 200){
+        count ++
+    } else {
+        count = 1
+    }
+    countData()
+}
+btnPrev.onclick = () => {
+    if (count <= 1){
+        count = 200
+    }else {
+        count --
+    }
+    countData()
+}
+
+setInterval(() => {
+    if (count < 200){
+        count ++
+    } else {
+        count = 1
+    }
+    countData()
+}, 3000)
+countData()
+
+fetch ("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => response.json())
+    .then((data) => console.log(data))

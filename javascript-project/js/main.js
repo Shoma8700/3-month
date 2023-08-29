@@ -73,3 +73,41 @@ prev.onclick = () => {
 }
 
 autoSlider(index)
+
+
+//PROMISE
+
+const promiseVariable = new Promise((resolve) => {
+    return setTimeout(() => {
+        const product = {
+            name:"Milk",
+            price:"$5"
+        }
+        console.log(`Product: ${product.name}\nPrice: ${product.price}\n1 step`)
+        resolve(product)
+    }, 1000)
+})
+//
+// const resolveData = (product) => {
+//     return setTimeout(() =>{
+//         product.price = "$8"
+//         console.log(`Product: ${product.name}\nPrice: ${product.price}\n2 step`)
+//     }, 3000)
+// }
+// promiseVariable.then(resolveData)
+
+promiseVariable.then((product) => {
+    return new Promise((resolve) => {
+        setTimeout(() =>{
+            product.price = "$8"
+            console.log(`Product: ${product.name}\nPrice: ${product.price}\n2 step`)
+            resolve(product)
+        }, 3000)
+    })
+}).then((product) => {
+    return setTimeout(() => {
+        product.name = "Cheese"
+        console.log(`Product: ${product.name}\nPrice: ${product.price}\n3 step`)
+    }, 2000)
+
+})
