@@ -75,46 +75,72 @@ const som = document.querySelector("#som")
 const usd = document.querySelector("#usd")
 const eur = document.querySelector("#eur")
 
-
-const convertor = (element, target, target2, elementName) =>{
-    element.oninput = () => {
-        const request = new XMLHttpRequest()
-        request.open("GET", "../data/convertor.json")
-        request.setRequestHeader("Content-type", "application/json")
-        request.send()
-
-        request.onload = () => {
-            const respons = JSON.parse(request.response)
+const convertor = ( element, target, target2, elementName) => {
+    element.oninput = async () => {
+        try {
+            const response = await fetch('../data/convertor.json')
+            const data = await response.json()
             switch (elementName) {
                 case "som":
-                    target.value = (element.value * respons.som / respons.usd).toFixed(2)
-                    target2.value = (element.value * respons.som / respons.eur).toFixed(2)
+                    target.value = (element.value * data.som / data.usd).toFixed(2)
+                    target2.value = (element.value * data.som / data.eur).toFixed(2)
                     break
                 case "usd":
-                    target.value = (element.value * respons.usd / respons.som).toFixed(2)
-                    target2.value = (element.value * respons.usd / respons.eur).toFixed(2)
+                    target.value = (element.value * data.usd / data.som).toFixed(2)
+                    target2.value = (element.value * data.usd / data.eur).toFixed(2)
                     break
                 case "eur":
-                    target.value = (element.value * respons.eur / respons.som).toFixed(2)
-                    target2.value = (element.value * respons.eur / respons.usd).toFixed(2)
+                    target.value = (element.value * data.eur / data.som).toFixed(2)
+                    target2.value = (element.value * data.eur / data.usd).toFixed(2)
                     break
             }
-            // if(element.value === ""){
-            //     target.value = ""
-            //     target2.value = ""
-            // }
-            // if (istru) {
-            //     target.value = (element.value / respons.usd).toFixed(2)
-            //     target2.value = (element.value / respons.eur).toFixed(2)
-            // } else {
-            //     target.value = (element.value * respons.usd).toFixed(2)
-            //     target2.value = (element.value * respons.eur).toFixed(2)
-            // }
-            // element.value === "" ? target.value = "":""
-
+            if (element.value === ""){
+                target.value = ""
+                target2.value = ""
+            }
+        } catch (e) {
+            alert(e, "Error")
         }
     }
 }
+// const convertor = (element, target, target2, elementName) => {
+//     element.oninput = () => {
+//         const request = new XMLHttpRequest()
+//         request.open("GET", "../data/convertor.json")
+//         request.setRequestHeader("Content-type", "application/json")
+//         request.send()
+//
+//         request.onload = () => {
+//             const respons = JSON.parse(request.response)
+//             switch (elementName) {
+//                 case "som":
+//                     target.value = (element.value * respons.som / respons.usd).toFixed(2)
+//                     target2.value = (element.value * respons.som / respons.eur).toFixed(2)
+//                     break
+//                 case "usd":
+//                     target.value = (element.value * respons.usd / respons.som).toFixed(2)
+//                     target2.value = (element.value * respons.usd / respons.eur).toFixed(2)
+//                     break
+//                 case "eur":
+//                     target.value = (element.value * respons.eur / respons.som).toFixed(2)
+//                     target2.value = (element.value * respons.eur / respons.usd).toFixed(2)
+//                     break
+//             }
+//             // if(element.value === ""){
+//             //     target.value = ""
+//             //     target2.value = ""
+//             // }
+//             // if (istru) {
+//             //     target.value = (element.value / respons.usd).toFixed(2)
+//             //     target2.value = (element.value / respons.eur).toFixed(2)
+//             // } else {
+//             //     target.value = (element.value * respons.usd).toFixed(2)
+//             //     target2.value = (element.value * respons.eur).toFixed(2)
+//             // }
+//             // element.value === "" ? target.value = "":""
+//         }
+//     }
+// }
 convertor(som, usd, eur, "som")
 convertor(usd, som, eur, "usd")
 convertor(eur, som, usd, "eur")
@@ -147,44 +173,75 @@ const btnPrev = document.querySelector("#btn-prev")
 const btnNext = document.querySelector("#btn-next")
 let count = 1
 
-const countData = () => {
-    fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
-        .then((response) => response.json())
-        .then((data) => {
-            card.innerHTML = `
-            <p>${data.title}</p>
-            <p style="color: ${data.completed ? "green" : "red"}">${data.completed}</p>
-            <span>${data.id}</span>
-             `
-        })
-}
-btnNext.onclick = () => {
-    if (count < 200){
-        count ++
-    } else {
-        count = 1
+const countData = async () => {
+    try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
+        const data = await response.json()
+        card.innerHTML = `
+        <p>${data.title}</p>
+        <p style="color: ${data.completed ? "green" : "red"}">${data.completed}</p>
+        <span>${data.id}</span>
+        `
+    } catch (e){
+        console.log(e, "Error")
     }
+}
+// // const countData = () => {
+// //     fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
+// //         .then((response) => response.json())
+// //         .then((data) => {
+// //             card.innerHTML = `
+// //             <p>${data.title}</p>
+// //             <p style="color: ${data.completed ? "green" : "red"}">${data.completed}</p>
+// //             <span>${data.id}</span>
+// //              `
+// //         })
+// // }
+
+btnNext.onclick = () => {
+    if (count < 200 ? count++ : count = 1)
     countData()
 }
 btnPrev.onclick = () => {
-    if (count <= 1){
-        count = 200
-    }else {
-        count --
-    }
+    if (count <= 1 ? count = 200 : count --)
     countData()
 }
 
-setInterval(() => {
-    if (count < 200){
-        count ++
-    } else {
-        count = 1
-    }
-    countData()
-}, 3000)
+// setInterval(() => {
+//     if (count < 200){
+//         count ++
+//     } else {
+//         count = 1
+//     }
+//     countData()
+// }, 4000)
 countData()
 
-fetch ("https://jsonplaceholder.typicode.com/posts")
-    .then((response) => response.json())
-    .then((data) => console.log(data))
+const asyncAwait = async () => {
+    try {
+        const response = await fetch ("https://jsonplaceholder.typicode.com/posts?_limit=50")
+        const data = await response.json()
+        console.log(data)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+const cityName = document.querySelector(".cityName")
+const city = document.querySelector(".city")
+const temp = document.querySelector(".temp")
+
+const baseUrl = 'http://api.openweathermap.org/data/2.5/weather'
+const apiKey = 'e417df62e04d3b1b111abeab19cea714'
+
+cityName.oninput = async (event) => {
+    try {
+        const response = await fetch(`${baseUrl}?q=${event.target.value}&appid=${apiKey}`)
+        const data = await response.json()
+        city.innerHTML = data?.name ? data.name : "Город не найден..."
+        temp.innerHTML = data?.main?.temp ? Math.round (data?.main?.temp - 271) + '&deg;C' : "..."
+    } catch (e) {
+        alert(e, "ERROR")
+    }
+}
